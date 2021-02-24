@@ -8,7 +8,7 @@ import About from './components/About'
 import Terms from './components/Terms'
 import Footer from './components/Footer'
 
-function ExampleComponent() {
+function Main() {
   return (
     <BrowserRouter>
       <Header/>
@@ -28,7 +28,7 @@ function ExampleComponent() {
   )
 }
 
-ReactDOM.render(<ExampleComponent />, document.querySelector("#app"))
+ReactDOM.render(<Main />, document.querySelector("#app"))
 
 if (module.hot) {
   module.hot.accept()

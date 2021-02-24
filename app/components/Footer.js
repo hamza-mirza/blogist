@@ -7,7 +7,7 @@ function Footer() {
       <p>
         <Link to="/" className="mx-1">Home</Link> | <Link className="mx-1" to="/about">About Us</Link> | <Link className="mx-1" to="/terms">Terms</Link>
         </p>
-      <p className="m-0">Copyright &copy; 2020 <Link to="/" className="text-muted">ComplexApp</Link>. All rights reserved.</p>
+      <p className="m-0">Copyright &copy; 2021 <Link to="/" className="text-muted">Blogist</Link>. All rights reserved.</p>
     </footer>
   )
 }
