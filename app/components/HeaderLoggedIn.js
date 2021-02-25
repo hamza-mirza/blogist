@@ -1,12 +1,12 @@
 import React from 'react'
 
-function HeaderLoggedIn() {
+function HeaderLoggedIn(props) {
   return (
     <header className="header-bar bg-primary mb-3">
       <div className="container d-flex flex-column flex-md-row align-items-center p-3">
         <h4 className="my-0 mr-md-auto font-weight-normal">
           <a href="/" className="text-white">
-            ComplexApp
+            Blogist
           </a>
         </h4>
         <div className="flex-row my-3 my-md-0">
@@ -23,7 +23,7 @@ function HeaderLoggedIn() {
           <a className="btn btn-sm btn-success mr-2" href="/create-post">
             Create Post
           </a>
-          <button className="btn btn-sm btn-secondary">
+          <button onClick={() => props.setLoggedIn(false)} className="btn btn-sm btn-secondary">
             Sign Out
           </button>
         </div>
