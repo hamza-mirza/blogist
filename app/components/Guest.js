@@ -14,7 +14,7 @@ function Guest() {
       await Axios.post('http://localhost:8080/register', { username, email, password })
       console.log('Success!') 
     } catch(e) {
-      console.log(e)
+      console.log('[-] Something went wrong')
     }
   }
 
