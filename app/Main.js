@@ -1,11 +1,15 @@
 import React, {useState} from 'react'
 import ReactDOM from 'react-dom'
 import {BrowserRouter, Switch, Route} from 'react-router-dom'
+import Axios from 'axios'
+Axios.defaults.baseURL = 'http://localhost:8080'
 
 import Header from './components/Header'
 import Guest from './components/Guest'
 import Home from './components/Home'
 import About from './components/About'
+import CreatePost from './components/CreatePost'
+import ViewSinglePost from './components/ViewSinglePost'
 import Terms from './components/Terms'
 import Footer from './components/Footer'
 
@@ -17,6 +21,12 @@ function Main() {
       <Switch>
         <Route path='/' exact>
           { loggedIn ? <Home/> : <Guest/> }
+        </Route>
+        <Route path='/create-post'>
+          <CreatePost/>
+        </Route>
+        <Route path='/post/:id'>
+          <ViewSinglePost/>
         </Route>
         <Route path='/about'>
           <About/>
