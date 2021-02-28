@@ -1,12 +1,16 @@
-import React from 'react'
-import {Link} from 'react-router-dom'
+import React, { useContext } from 'react'
+import { Link } from 'react-router-dom'
+
+import Context from '../Context'
 
 function HeaderLoggedIn(props) {
+  const { setLoggedIn } = useContext(Context)
+
   function handleLogout() {
     localStorage.removeItem('blogToken')
     localStorage.removeItem('blogUsername')
     localStorage.removeItem('blogAvatar')
-    props.setLoggedIn(false)
+    setLoggedIn(false)
   }
 
   return (
@@ -19,7 +23,10 @@ function HeaderLoggedIn(props) {
         <span className="chat-count-badge text-white"> </span>
       </span>
       <a href="#" className="mr-2">
-        <img className="small-header-avatar" src={localStorage.getItem('blogAvatar')} />
+        <img
+          className="small-header-avatar"
+          src={localStorage.getItem('blogAvatar')}
+        />
       </a>
       <Link className="btn btn-sm btn-success mr-2" to="/create-post">
         Create Post
