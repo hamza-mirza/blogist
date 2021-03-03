@@ -2,14 +2,14 @@ import React, { useState, useContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import Axios from 'axios'
 
-import Context from '../Context'
+import DispatchContext from '../DispatchContext'
 
 import Page from './Page'
 
 function CreatePost(props) {
   const [title, setTitle] = useState()
   const [body, setBody] = useState()
-  const { addFlashMessage } = useContext(Context)
+  const appDispatch = useContext(DispatchContext)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -19,7 +19,7 @@ function CreatePost(props) {
         body,
         token: localStorage.getItem('blogToken'),
       })
-      addFlashMessage('Post created successfully.')
+      appDispatch({ type: 'flashMessage', value: 'Post created successfully!' })
       props.history.push(`/post/${response.data}`)
       console.log('[+] Post created.')
     } catch (e) {

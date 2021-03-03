@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react'
 import Axios from 'axios'
 
-import Context from '../Context'
+import DispatchContext from '../DispatchContext'
 
-function HeaderLoggedOut(props) {
+function HeaderLoggedOut() {
   const [username, setUsername] = useState()
   const [password, setPassword] = useState()
-  const { setLoggedIn } = useContext(Context)
+  const appDispatch = useContext(DispatchContext)
 
   async function handleSubmit(e) {
     e.preventDefault()
@@ -16,7 +16,7 @@ function HeaderLoggedOut(props) {
         localStorage.setItem('blogToken', response.data.token)
         localStorage.setItem('blogUsername', response.data.username)
         localStorage.setItem('blogAvatar', response.data.avatar)
-        setLoggedIn(true)
+        appDispatch({ type: 'login' })
       } else {
         console.log('[-] Incorrect credentials.')
       }
