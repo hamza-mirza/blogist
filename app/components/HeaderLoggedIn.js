@@ -1,9 +1,12 @@
-import React, { useEffect } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 
-function HeaderLoggedIn(props) {
+import Context from '../Context'
+
+function HeaderLoggedIn() {
+  const { setLoggedIn } = useContext(Context)
   function handleLogout() {
-    props.setLoggedIn(false)
+    setLoggedIn(false)
     localStorage.removeItem('blogToken')
     localStorage.removeItem('blogUsername')
     localStorage.removeItem('blogAvatar')

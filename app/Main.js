@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
 import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Axios from 'axios'
@@ -17,17 +17,31 @@ import ViewSinglePost from './components/ViewSinglePost'
 import FlashMessages from './components/FlashMessages'
 
 function Main() {
-  const [loggedIn, setLoggedIn] = useState(
-    Boolean(localStorage.getItem('blogToken'))
-  )
-  const [flashMessages, setFlashMessages] = useState([])
+  const initialState = {
+    loggedIn: Boolean(localStorage.getItem('blogToken')),
+    flassMessages: [],
+  }
+  function appReducer(state, action) {
+    switch (action.type) {
+      case 'login':
+        return { loggedIn: true, flashMessages: state.flashMessages }
+      case 'logout':
+        return { loggedIn: false, flashMessages: state.flashMessages }
+      case 'flashMessage':
+        return {
+          loggedIn: state.loggedIn,
+          flashMessages: state.flashMessages.concat(action.value),
+        }
+    }
+  }
+  const [state, dispatch] = useReducer(appReducer, initialState)
 
   function addFlashMessage(msg) {
     setFlashMessages((prev) => prev.concat(msg))
   }
 
   return (
-    <Context.Provider value={addFlashMessage}>
+    <Context.Provider value={{ addFlashMessage, setLoggedIn }}>
       <BrowserRouter>
         <FlashMessages messages={flashMessages} />
         <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
