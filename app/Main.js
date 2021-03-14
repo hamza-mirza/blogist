@@ -3,9 +3,6 @@ import ReactDOM from 'react-dom'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
 import Axios from 'axios'
 Axios.defaults.baseURL = 'http://localhost:8080'
-
-import Context from './Context'
-
 import Header from './components/Header'
 import HomeGuest from './components/HomeGuest'
 import Home from './components/Home'
@@ -16,10 +13,13 @@ import CreatePost from './components/CreatePost'
 import ViewSinglePost from './components/ViewSinglePost'
 import FlashMessages from './components/FlashMessages'
 
+import StateContext from './StateContext'
+import DispatchContext from './DispatchContext'
+
 function Main() {
   const initialState = {
     loggedIn: Boolean(localStorage.getItem('blogToken')),
-    flassMessages: [],
+    flashMessages: [],
   }
   function appReducer(state, action) {
     switch (action.type) {
@@ -36,35 +36,33 @@ function Main() {
   }
   const [state, dispatch] = useReducer(appReducer, initialState)
 
-  function addFlashMessage(msg) {
-    setFlashMessages((prev) => prev.concat(msg))
-  }
-
   return (
-    <Context.Provider value={{ addFlashMessage, setLoggedIn }}>
-      <BrowserRouter>
-        <FlashMessages messages={flashMessages} />
-        <Header loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-        <Switch>
-          <Route path="/" exact>
-            {loggedIn ? <Home /> : <HomeGuest />}
-          </Route>
-          <Route path="/post/:id">
-            <ViewSinglePost />
-          </Route>
-          <Route path="/create-post">
-            <CreatePost />
-          </Route>
-          <Route path="/about-us">
-            <About />
-          </Route>
-          <Route path="/terms">
-            <Terms />
-          </Route>
-        </Switch>
-        <Footer />
-      </BrowserRouter>
-    </Context.Provider>
+    <StateContext.Provider value={state}>
+      <DispatchContext.Provider value={dispatch}>
+        <BrowserRouter>
+          <FlashMessages messages={state.flashMessages} />
+          <Header />
+          <Switch>
+            <Route path="/" exact>
+              {state.loggedIn ? <Home /> : <HomeGuest />}
+            </Route>
+            <Route path="/post/:id">
+              <ViewSinglePost />
+            </Route>
+            <Route path="/create-post">
+              <CreatePost />
+            </Route>
+            <Route path="/about-us">
+              <About />
+            </Route>
+            <Route path="/terms">
+              <Terms />
+            </Route>
+          </Switch>
+          <Footer />
+        </BrowserRouter>
+      </DispatchContext.Provider>
+    </StateContext.Provider>
   )
 }
 
